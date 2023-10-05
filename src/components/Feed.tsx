@@ -1,9 +1,10 @@
 import { auth } from '../firebase'
 import TweetInput from './TweetInput'
+import styles from './Feed.module.css'
 
 const Feed = () => {
 return (
-<div>Feed
+<div className={styles.feed}>Feed
 
 <TweetInput />
 
