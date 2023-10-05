@@ -96,6 +96,8 @@ const Post: React.FC<PROPS> = (props) => {
         };
     }, [props.postId]);
 
+    const [openComments, setOpenComments] = useState(false);
+
 
 
     return (
@@ -127,7 +129,13 @@ const Post: React.FC<PROPS> = (props) => {
 
 
 
-                {comments.map((comment) => (
+
+                <MessageIcon
+                className={styles.post_commentIcon}
+                onClick={() => setOpenComments(!openComments)}
+                />
+
+                {openComments && comments.map((comment) => (
                     <div key={comment.id} className={styles.post_comment}>
                         <Avatar src={comment.avatar} className={classes.small} />
                         <span className={styles.post_commentUser}>@{comment.username}</span>
