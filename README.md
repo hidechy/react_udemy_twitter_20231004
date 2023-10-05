@@ -1,7 +1,8 @@
-# udemy react twitter
+# 教科書
 - [udemy](https://www.udemy.com/course/firebase-react-hookstypescriptweb/)
+- [github](https://github.com/GomaGoma676/twitter_firebase/tree/master)
 ---
-# making directory
+# directory
 ```javascript
 cd /Users/toyohide/Desktop/hideyuki/MY_STUDY/react_udemy_firebase_hooks/react_twitter1004
 code .
@@ -13,5 +14,8 @@ cd /Users/toyohide/Desktop/hideyuki/MY_STUDY/react_udemy_firebase_hooks
 open reactHooks1.xlsx
 ```
 ---
-# github
-- [github](https://github.com/GomaGoma676/twitter_firebase/tree/master)
+# npm start
+```javascript
+cd /Users/toyohide/Desktop/hideyuki/MY_STUDY/react_udemy_firebase_hooks/react_twitter1004
+npm start
+```
