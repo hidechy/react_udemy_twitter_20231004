@@ -20,6 +20,16 @@ interface PROPS {
     username: string;
 }
 
+interface COMMENT {
+    id: string;
+    avatar: string;
+    text: string;
+    timestamp: any;
+    username: string;
+}
+
+
+
 const Post: React.FC<PROPS> = (props) => {
 
     const user = useSelector(selectUser);
@@ -39,6 +49,39 @@ const Post: React.FC<PROPS> = (props) => {
         setComment("");
     };
 
+
+
+    const [comments, setComments] = useState<COMMENT[]>([
+        {
+            id: "",
+            avatar: "",
+            text: "",
+            timestamp: null,
+            username: "",
+        }
+    ]);
+
+    useEffect(() => {
+        const unsub = db.collection("posts").doc(props.postId)
+        .collection("comments").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+            setComments(
+                snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    avatar: doc.data().avatar,
+                    text: doc.data().text,
+                    username: doc.data().username,
+                    timestamp: doc.data().timestamp,
+                }))
+            );
+        })
+
+        return () => {
+            unsub();
+        };
+    }, [props.postId]);
+
+
+
     return (
         <div className={styles.post}>
 
@@ -51,7 +94,7 @@ const Post: React.FC<PROPS> = (props) => {
                     <div className={styles.post_header}>
                         <h3>
                             <span className={styles.post_headerUser}>@{props.username}</span>
-                            <span className={styles.post_headerTime}>{new Date(props.timestamp?.toDate()).toLocaleDateString()}</span>
+                            <span className={styles.post_headerTime}>{new Date(props.timestamp?.toDate()).toLocaleString()}</span>
                         </h3>
                     </div>
 
@@ -65,6 +108,21 @@ const Post: React.FC<PROPS> = (props) => {
                         <img src={props.image} alt='tweet' />
                     </div>
                 )}
+
+
+
+                {comments.map((comment) => (
+                    <div key={comment.id} className={styles.post_comment}>
+                        <Avatar src={comment.avatar} />
+                        <span className={styles.post_commentUser}>@{comment.username}</span>
+                        <span className={styles.post_commentText}>{comment.text}</span>
+                        <span className={styles.post_headerTime}>
+                            {new Date(comment.timestamp?.toDate()).toLocaleString()}
+                        </span>
+                    </div>
+                ))}
+
+
 
                 <form onSubmit={newComment}>
                     <div className={styles.post_form}>
