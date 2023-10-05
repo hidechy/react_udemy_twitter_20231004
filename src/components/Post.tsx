@@ -30,7 +30,23 @@ interface COMMENT {
 
 
 
+const useStyles = makeStyles((theme) => ({
+small: {
+width: theme.spacing(3),
+height: theme.spacing(3),
+marginRight: theme.spacing(1),
+},
+}));
+
+
+
 const Post: React.FC<PROPS> = (props) => {
+
+
+
+    const classes = useStyles();
+
+
 
     const user = useSelector(selectUser);
 
@@ -113,7 +129,7 @@ const Post: React.FC<PROPS> = (props) => {
 
                 {comments.map((comment) => (
                     <div key={comment.id} className={styles.post_comment}>
-                        <Avatar src={comment.avatar} />
+                        <Avatar src={comment.avatar} className={classes.small} />
                         <span className={styles.post_commentUser}>@{comment.username}</span>
                         <span className={styles.post_commentText}>{comment.text}</span>
                         <span className={styles.post_headerTime}>
