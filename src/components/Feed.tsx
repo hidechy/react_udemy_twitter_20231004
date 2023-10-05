@@ -4,6 +4,8 @@ import styles from './Feed.module.css'
 import { useState, useEffect } from 'react'
 import { db } from '../firebase'
 
+import Post from './Post'
+
 const Feed: React.FC = () => {
 
 const [posts, setPosts] = useState([
@@ -41,7 +43,7 @@ return (
 <TweetInput />
 
 {posts.map((post) => (
-    <h3>{post.id}</h3>
+    <Post key={post.id} postId={post.id} avatar={post.avatar} image={post.image} text={post.text} timestamp={post.timestamp} username={post.username} />
 ))}
 
 </div>
