@@ -11,15 +11,11 @@ import { Button, IconButton } from '@material-ui/core'
 import firebase from 'firebase/app'
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 
-
-
-const TweetInput = () => {
+const TweetInput: React.FC = () => {
     const user = useSelector(selectUser);
 
     const [tweetImage, setTweetImage] = useState<File | null>(null);
     const [tweetMsg, setTweetMsg] = useState("");
-
-
 
     const onChangeImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files![0]){
@@ -27,8 +23,6 @@ const TweetInput = () => {
             e.target.value = "";
         }
     }
-
-
 
     const sendTweet = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -74,11 +68,6 @@ const TweetInput = () => {
         setTweetImage(null);
         setTweetMsg("");
     }
-
-
-
-
-
 
     return (
         <>
@@ -130,7 +119,5 @@ const TweetInput = () => {
         </>
     )
 }
-
-
 
 export default TweetInput
