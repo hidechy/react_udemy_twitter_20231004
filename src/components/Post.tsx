@@ -28,8 +28,6 @@ interface COMMENT {
     username: string;
 }
 
-
-
 const useStyles = makeStyles((theme) => ({
 small: {
 width: theme.spacing(3),
@@ -38,15 +36,9 @@ marginRight: theme.spacing(1),
 },
 }));
 
-
-
 const Post: React.FC<PROPS> = (props) => {
 
-
-
     const classes = useStyles();
-
-
 
     const user = useSelector(selectUser);
 
@@ -64,8 +56,6 @@ const Post: React.FC<PROPS> = (props) => {
 
         setComment("");
     };
-
-
 
     const [comments, setComments] = useState<COMMENT[]>([
         {
@@ -98,8 +88,6 @@ const Post: React.FC<PROPS> = (props) => {
 
     const [openComments, setOpenComments] = useState(false);
 
-
-
     return (
         <div className={styles.post}>
 
@@ -127,50 +115,53 @@ const Post: React.FC<PROPS> = (props) => {
                     </div>
                 )}
 
-
-
-
                 <MessageIcon
                 className={styles.post_commentIcon}
                 onClick={() => setOpenComments(!openComments)}
                 />
 
-                {openComments && comments.map((comment) => (
-                    <div key={comment.id} className={styles.post_comment}>
-                        <Avatar src={comment.avatar} className={classes.small} />
-                        <span className={styles.post_commentUser}>@{comment.username}</span>
-                        <span className={styles.post_commentText}>{comment.text}</span>
-                        <span className={styles.post_headerTime}>
-                            {new Date(comment.timestamp?.toDate()).toLocaleString()}
-                        </span>
-                    </div>
-                ))}
+                {
+                    openComments && (
+                        <>
 
+                        {comments.map((com) => (
+                            <div key={com.id} className={styles.post_comment}>
+                                <Avatar src={com.avatar} className={classes.small} />
+                                <span className={styles.post_commentUser}>@{com.username}</span>
+                                <span className={styles.post_commentText}>{com.text}</span>
+                                <span className={styles.post_headerTime}>
+                                    {new Date(com.timestamp?.toDate()).toLocaleString()}
+                                </span>
+                            </div>
+                        ))}
 
+                        <form onSubmit={newComment}>
+                            <div className={styles.post_form}>
+                                <input
+                                className={styles.post_input}
+                                type='text'
+                                placeholder='comment input'
+                                value={comment}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                    setComment(e.target.value)
+                                }}
+                                />
 
-                <form onSubmit={newComment}>
-                    <div className={styles.post_form}>
-                        <input
-                        className={styles.post_input}
-                        type='text'
-                        placeholder='comment input'
-                        value={comment}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            setComment(e.target.value)
-                        }}
-                        />
+                                <button
+                                disabled={!comment}
+                                className={
+                                    comment ? styles.post_button : styles.post_buttonDisable
+                                }
+                                type='submit'
+                                >
+                                    <SendIcon className={styles.post_sendIcon} />
+                                </button>
+                            </div>
+                        </form>
 
-                        <button
-                        disabled={!comment}
-                        className={
-                            comment ? styles.post_button : styles.post_buttonDisable
-                        }
-                        type='submit'
-                        >
-                            <SendIcon className={styles.post_sendIcon} />
-                        </button>
-                    </div>
-                </form>
+                        </>
+                    )
+                }
 
             </div>
 
